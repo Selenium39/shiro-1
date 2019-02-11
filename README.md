@@ -96,4 +96,4 @@ shiro认证策略:多个realm访问多个数据库,如何判断是否登录成�
         2.在ioc容器配置指定的Realm的bean实例(授权器)
         3.告知securityManager使用哪一个授权管理器
 ```
-参考我<a src="https://ke.qq.com/webcourse/index.html#cid=197393&term_id=100233954&taid=1223524513678097&vid=x14177geywk" target="_blank">点击我</a>
+参考视频:<a href="https://ke.qq.com/webcourse/index.html#cid=197393&term_id=100233954&taid=1223524513678097&vid=x14177geywk" target="_blank">点击我</a>
