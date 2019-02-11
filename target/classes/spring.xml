@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<context:component-scan
+		base-package="com.wantao.*">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<!--安全管理器bean 1.缓存技术缓存管理 2.realm:负责获取处理数据 -->
+	<bean id="securityManager"
+		class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="authorizer" ref="authorizer"></property>
+		<!--<property name="cacheManager" ref="cacheManager"></property> -->
+		<!-- 单个realm -->
+		<!-- <property name="realm" ref="jdbcRealm"></property> -->
+		<!-- 第一种方法配置多个realm -->
+		<property name="realms">
+			<list>
+				<ref bean="jdbcRealm" />
+				<ref bean="jdbcRealm1" />
+			</list>
+		</property>
+		<!-- 第二种方法配置多个realm -->
+		<!--<property name="authenticator" ref="authenticator"></property> -->
+	</bean>
+	<bean id="cacheManager"
+		class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManagerConfigFile"
+			value="classpath:ehcache.xml"></property>
+	</bean>
+	<bean id="jdbcRealm" class="com.wantao.bean.MyRealm">
+		<!-- 将前端的输入的密码进行md5的加密 -->
+		<property name="credentialsMatcher">
+			<bean
+				class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+				<property name="hashAlgorithmName" value="md5"></property>
+				<property name="hashIterations" value="2019"></property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="jdbcRealm1" class="com.wantao.bean.MyRealm1">
+		<!-- 将前端的输入的密码进行sha1的加密 -->
+		<property name="credentialsMatcher">
+			<bean
+				class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+				<property name="hashAlgorithmName" value="sha1"></property>
+				<property name="hashIterations" value="2019"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 第二种方法配置多Realm -->
+	<!-- 认证管理器 -->
+	<!--<bean id="authenticator" class="org.apache.shiro.authc.pam.ModularRealmAuthenticator"> 
+		<property name="authenticationStrategy" ref="allSuccessfulStrategy"></property> 
+		<property name="realms"> <list> <ref bean="jdbcRealm" /> <ref bean="jdbcRealm1" 
+		/> </list> </property> </bean> -->
+	<!-- 认证策略 -->
+	<!-- <bean id="allSuccessfulStategy" class="org.apache.shiro.authc.pam.AllSuccessfulStrategy"></bean> -->
+	<!-- 授权管理器 -->
+	<bean id="authorizer"
+		class="org.apache.shiro.authz.ModularRealmAuthorizer">
+		<property name="realms">
+			<list>
+				<ref bean="jdbcRealm" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 必须有这样的实例,来管理在spring容器当中shiro常见的对象 -->
+	<bean id="lifecycleBeanPostProcessor"
+		class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
+	<!-- 启用shiro注解 -->
+	<bean depends-on="lifecycleBeanPostProcessor"
+		class="org.springframework.aop.framework.adapter.DefaultAdvisorAdapterRegistry"></bean>
+	<!-- 网络方面 -->
+	<bean id="secureRemoteInvocationExecutor"
+		class="org.apache.shiro.spring.remoting.SecureRemoteInvocationExecutor">
+		<property name="securityManager" ref="securityManager"></property>
+	</bean>
+	<!-- 配置shiro的过滤器 1.shiroFilter这个bean的id必须与web.xml中filter代理类名相同 -->
+	<bean id="shiroFilter"
+		class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager"></property>
+		<property name="loginUrl" value="/login.jsp"></property>
+		<property name="successUrl" value="/success.jsp"></property>
+		<property name="unauthorizedUrl" value="/abc.jsp"></property>
+		<!-- 代表我们要完成shiro的具体配置 -->
+		<property name="filterChainDefinitions">
+			<value>
+				<!-- url=拦截器[参数 ] -->
+				<!-- url采取第一次匹配优先的方式 -->
+				/login.jsp=anon  <!-- 未经过认证可以访问的资源 -->
+				/login=anon
+				/exit=logout     <!-- 当登录成功后回退再次登录,即使密码错误还是能够登录成功,因为又缓存,这是可以设置logout,再次登录如果密码错误不能够登录 -->
+				/admin.jsp=roles[admin] <!-- admin.jsp只有admin角色才能访问 -->
+				/user.jsp=roles[user]   <!-- user.jsp只有user角色才能访问 -->
+				/**=authc        <!-- 认证后可以访问的资源 -->
+			</value>
+		</property>
+	</bean>
+
+</beans>

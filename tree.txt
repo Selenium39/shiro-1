@@ -1,0 +1,100 @@
+nhhjj卷 新加卷 的文件夹 PATH 列表
+卷序列号为 9266-E901
+D:.
+│  .classpath
+│  .project
+│  .springBeans
+│  pom.xml
+│  shiro-1.txt
+│  tree.txt
+│  
+├─.settings
+│      .jsdtscope
+│      org.eclipse.jdt.core.prefs
+│      org.eclipse.m2e.core.prefs
+│      org.eclipse.wst.common.component
+│      org.eclipse.wst.common.project.facet.core.xml
+│      org.eclipse.wst.jsdt.ui.superType.container
+│      org.eclipse.wst.jsdt.ui.superType.name
+│      
+├─result-image
+│      admin.png
+│      error.png
+│      login.png
+│      success.png
+│      user.png
+│      
+├─src
+│  ├─main
+│  │  ├─java
+│  │  │  └─com
+│  │  │      └─wantao
+│  │  │          ├─bean
+│  │  │          │      MyRealm.java
+│  │  │          │      MyRealm1.java
+│  │  │          │      
+│  │  │          └─controller
+│  │  │                  ShiroController.java
+│  │  │                  
+│  │  ├─resources
+│  │  │      ehcache.xml
+│  │  │      log4j.properties
+│  │  │      shiro.ini
+│  │  │      spring.xml
+│  │  │      springmvc.xml
+│  │  │      
+│  │  └─webapp
+│  │      │  abc.jsp
+│  │      │  admin.jsp
+│  │      │  error.jsp
+│  │      │  login.jsp
+│  │      │  success.jsp
+│  │      │  user.jsp
+│  │      │  
+│  │      ├─META-INF
+│  │      │      MANIFEST.MF
+│  │      │      
+│  │      └─WEB-INF
+│  │          │  web.xml
+│  │          │  
+│  │          └─lib
+│  └─test
+│      ├─java
+│      │  └─com
+│      │      └─wantao
+│      │          └─test
+│      │                  Shiro1Test.java
+│      │                  
+│      └─resources
+└─target
+    ├─classes
+    │  │  ehcache.xml
+    │  │  log4j.properties
+    │  │  shiro.ini
+    │  │  spring.xml
+    │  │  springmvc.xml
+    │  │  
+    │  ├─com
+    │  │  └─wantao
+    │  │      ├─bean
+    │  │      │      MyRealm.class
+    │  │      │      MyRealm1.class
+    │  │      │      
+    │  │      └─controller
+    │  │              ShiroController.class
+    │  │              
+    │  └─META-INF
+    │      │  MANIFEST.MF
+    │      │  
+    │      └─maven
+    │          └─com.wantao
+    │              └─shiro-1
+    │                      pom.properties
+    │                      pom.xml
+    │                      
+    └─test-classes
+        └─com
+            └─wantao
+                └─test
+                        Shiro1Test.class
+                        
