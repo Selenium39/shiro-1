@@ -37,7 +37,7 @@ public class MyRealm extends AuthorizingRealm {
 	/**
 	 * @param AuthenticationToken token 前端的用户名和密码
 	 * @return AuthenticationInfo
-	 * @description 授权
+	 * @description 认证
 	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
@@ -68,7 +68,7 @@ public class MyRealm extends AuthorizingRealm {
 	/**
 	 * @param PrincipalCollection principals 登录的用户名
 	 * @return AuthorizationInfo
-	 * @description 认证
+	 * @description 授权
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
